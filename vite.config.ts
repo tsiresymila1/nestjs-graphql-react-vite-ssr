@@ -17,6 +17,7 @@ defineConfig({
   ],
   build: {
     minify: false,
+    emptyOutDir: false,
   },
   resolve: {
     alias: {

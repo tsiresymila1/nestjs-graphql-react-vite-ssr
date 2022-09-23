@@ -32,7 +32,7 @@ export class WebController {
         template  = readFileSync(resolveDistPath('client', 'index.html'), {
           encoding: 'utf-8',
         });
-        render = (await import(resolveDistPath('src', 'entry-server.js')))
+        render = (await import(resolveDistPath('entry-server.mjs')))
           .render;
       } else {
         vite = await getViteServer();
