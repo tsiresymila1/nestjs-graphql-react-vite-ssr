@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["client/*"]
+      "@/*": ["client/*"] 
     }
   }
 }

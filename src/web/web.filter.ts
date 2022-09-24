@@ -1,12 +1,7 @@
-import {
-  Controller,
-  Get,
-  Header,
-  InternalServerErrorException,
-  Req,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, NotFoundException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import { Request, Response } from 'express';
+
 import { readFileSync } from 'fs';
-import type { Request } from 'express';
 import type { ViteDevServer } from 'vite';
 import { isProduction } from 'src/utils/env';
 import { resolveClientPath, resolveDistPath } from 'src/utils/resolve-path';
@@ -14,13 +9,14 @@ import { getViteServer } from '../vite-server';
 
 const TEMPLATE_PLACEHOLDER = '<!-- template-placeholder -->';
 
-@Controller('*')
-export class WebController {
-  constructor() {}
+@Catch(NotFoundException)
+export class FrontendRenderFilter implements ExceptionFilter {
+  async catch(exception: NotFoundException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest<Request>();
+    const status = exception.getStatus();
 
-  @Get()
-  @Header('Content-Type', 'text/html')
-  async renderApp(@Req() request: Request): Promise<string> {
     const url = request.originalUrl;
     let vite: ViteDevServer;
     let template : string;
@@ -46,7 +42,7 @@ export class WebController {
       }
 
       const {html} = await render(url);
-      return template .replace(TEMPLATE_PLACEHOLDER, html);
+      response.send(template .replace(TEMPLATE_PLACEHOLDER, html));
     } catch (error) {
       vite && vite.ssrFixStacktrace(error);
       throw new InternalServerErrorException(error);

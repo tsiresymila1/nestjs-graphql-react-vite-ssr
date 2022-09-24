@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import { fileURLToPath, URL } from 'url';
-import react from '@vitejs/plugin-react';
+// import { fileURLToPath, URL } from 'url';
+import react from '@vitejs/plugin-react'; 
 import { resolve } from 'path';
 
 defineConfig({
@@ -17,12 +17,13 @@ defineConfig({
   ],
   build: {
     minify: false,
-    emptyOutDir: false,
+    emptyOutDir: false, 
   },
-  resolve: {
-    alias: {
-      // @ts-ignore
-      '@': fileURLToPath(new URL('client', import.meta.url)), 
-    },
-  },
+//   resolve: {
+//     alias: {
+//       // @ts-ignore
+//     //   '@': fileURLToPath(new URL('client', import.meta.url)), 
+//     '@': resolve(__dirname, './client')
+//     },
+//   },
 });
