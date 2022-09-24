@@ -5,7 +5,6 @@ import { StaticRouter } from 'react-router-dom/server';
 import { App } from './App';
 
 export async function render(url: string) {
-  console.log(url);
   let html = ReactDOMServer.renderToString(
     <React.StrictMode>
       <StaticRouter location={url}>

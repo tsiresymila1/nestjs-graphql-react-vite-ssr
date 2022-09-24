@@ -21,7 +21,6 @@ export class FrontendRenderFilter implements ExceptionFilter {
     let vite: ViteDevServer;
     let template : string;
     let render: (url: string) => Promise<{ html: string }>;
-    console.log(url)
 
     try {
       if (isProduction) {
