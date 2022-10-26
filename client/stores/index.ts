@@ -1,11 +1,13 @@
 import  loaderSlice  from '../slice/loaderSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import  errorSlice  from '../slice/errorSlice'
+import  authSlice from '../slice/authSlice'
 
 export const store = configureStore({
   reducer: {
     loader: loaderSlice,
-    error: errorSlice
+    error: errorSlice,
+    auth: authSlice
   },
 })
 

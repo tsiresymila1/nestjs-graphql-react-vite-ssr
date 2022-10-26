@@ -18,7 +18,7 @@ export async function getViteServer({ force } = { force: false }) {
       server: {
         middlewareMode: true,
       },
-      appType: 'custom'
+      appType: 'custom',
     });
   }
 

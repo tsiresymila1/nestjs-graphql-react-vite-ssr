@@ -1,4 +1,11 @@
-import { ExceptionFilter, Catch, ArgumentsHost, NotFoundException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  NotFoundException,
+  InternalServerErrorException,
+  BadRequestException,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { readFileSync } from 'fs';
@@ -19,30 +26,31 @@ export class FrontendRenderFilter implements ExceptionFilter {
 
     const url = request.originalUrl;
     let vite: ViteDevServer;
-    let template : string;
+    let template: string;
     let render: (url: string) => Promise<{ html: string }>;
 
     try {
       if (isProduction) {
-        template  = readFileSync(resolveDistPath('client', 'index.html'), {
+        template = readFileSync(resolveDistPath('client', 'index.html'), {
           encoding: 'utf-8',
         });
-        render = (await import(resolveDistPath('entry-server.mjs')))
+        render = (await import(resolveDistPath('client', 'entry-server.js')))
           .render;
       } else {
         vite = await getViteServer();
-        template  = readFileSync(resolveClientPath('index.html'), {
-            encoding: 'utf-8',
-          });
-        template  = await vite.transformIndexHtml(url,template);
+        template = readFileSync(resolveClientPath('index.html'), {
+          encoding: 'utf-8',
+        });
+        template = await vite.transformIndexHtml(url, template);
         const reactRenderer = resolveClientPath('entry-server.tsx');
         const plugin = await vite.ssrLoadModule(reactRenderer);
         render = plugin.render;
       }
 
-      const {html} = await render(url);
-      response.send(template .replace(TEMPLATE_PLACEHOLDER, html));
+      const { html } = await render(url);
+      response.send(template.replace(TEMPLATE_PLACEHOLDER, html));
     } catch (error) {
+      console.warn(error);
       vite && vite.ssrFixStacktrace(error);
       throw new InternalServerErrorException(error);
     }

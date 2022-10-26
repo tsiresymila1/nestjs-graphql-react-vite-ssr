@@ -5,6 +5,7 @@ import {
   DefaultContext,
   DocumentNode,
   MutationHookOptions,
+  MutationTuple,
   OperationVariables,
   TypedDocumentNode,
   useMutation,
@@ -20,9 +21,9 @@ export function useCustomMutation<
 >(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: MutationHookOptions<TData, TVariables, TContext>,
-) {
+) :  MutationTuple<TData, TVariables, TContext, TCache>{
   const dispatch = useAppDispatch();
-  const [mutate, { loading, error, data, client, reset }] = useMutation<
+  const [mutate, { loading, error, data, client, reset, called }] = useMutation<
     TData,
     TVariables,
     TContext,
@@ -45,5 +46,5 @@ export function useCustomMutation<
     }
   }, [error]);
 
-  return [mutate, reset, { data, client }];
+  return [mutate, {loading, error, data, client, reset, called }];
 }

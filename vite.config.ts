@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react'; 
 import { resolve } from 'path';
 
-defineConfig({
+export default defineConfig({
   publicDir: resolve(__dirname, 'client', 'public'),
   plugins: [
     react({
@@ -12,18 +12,17 @@ defineConfig({
           ['@babel/plugin-transform-react-jsx'],
         ],
       },
-      jsxRuntime: 'classic',
+      jsxRuntime: "classic",
     }),
   ],
   build: {
-    minify: false,
+    minify: true,
     emptyOutDir: false, 
   },
-//   resolve: {
-//     alias: {
-//       // @ts-ignore
-//     //   '@': fileURLToPath(new URL('client', import.meta.url)), 
-//     '@': resolve(__dirname, './client')
-//     },
-//   },
+  ssr: {
+    format: 'cjs',
+  },
+  legacy: {
+    buildSsrCjsExternalHeuristics: true,
+  },
 });

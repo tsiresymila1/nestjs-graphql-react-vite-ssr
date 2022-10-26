@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as compression from 'compression';
@@ -18,8 +19,19 @@ async function bootstrap() {
     const vite = await getViteServer();
     app.use(vite.middlewares);
   }
-  app.useGlobalFilters(new FrontendRenderFilter()) 
-  await app.listen(3000); 
+  app.enableCors({
+    origin: '*',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Origin',
+    preflightContinue: false,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
+  app.useGlobalFilters(new FrontendRenderFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+  await app.listen(3000);
 }
 bootstrap();
-

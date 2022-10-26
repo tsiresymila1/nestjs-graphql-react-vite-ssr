@@ -1,0 +1,118 @@
+/* Grow */
+
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.1);
+}
+
+#sidebar-wrapper {
+    z-index: 999;
+    position: fixed;
+    min-height: 100vh;
+    min-width: 200px !important;
+    width: 14vw;
+    margin-left: -13rem;
+    -webkit-transition: margin .3s ease-out;
+    -moz-transition: margin .3s ease-out;
+    -o-transition: margin .3s ease-out;
+    transition: margin .3s ease-out;
+    /*box-shadow: 0 .1rem 1rem rgba(0, 0, 0, .05)!important;*/
+    border-right: none !important;
+    background-color: rgb(241, 241, 241);
+}
+
+.navbar {
+    box-shadow: 0 .5rem 1rem -10px rgba(0, 0, 0, .15)!important;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 20px 1.25rem;
+    font-size: 13px;
+    ;
+}
+
+#sidebar-wrapper .list-group {
+    width: 100%;
+    margin: 00px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 100px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    margin-left: 0px;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0px;
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+        -webkit-transition: margin .3s ease-out;
+        -moz-transition: margin .3s ease-out;
+        -o-transition: margin .3s ease-out;
+        transition: margin .3s ease-out;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: min(-14vw ,(-200px));
+    }
+    #wrapper #page-content-wrapper {
+        margin-left: max(14vw, 200px);
+    }
+    #wrapper .toggled #page-content-wrapper {
+        opacity: 0.5;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: -15.4rem;
+        z-index: 99999;
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0;
+    }
+    #wrapper .toggled #page-content-wrapper {
+        margin-left: 0;
+        opacity: 0.5;
+    }
+    #wrapper .toggled #admin-content {
+        opacity: 0.5;
+    }
+}
+
+.sidebar-wrapper>a:hover {
+    background-color: #0abeaf;
+}
+
+
+/* END SIDEBAR */
+
+.navbar {
+    height: 60px;
+    box-shadow: inset 1px 1px #eeeeee;
+}
+
+.modal-body {
+    overflow-y: auto;
+}

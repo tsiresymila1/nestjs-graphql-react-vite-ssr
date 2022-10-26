@@ -6,6 +6,7 @@ import {
   QueryHookOptions,
   TypedDocumentNode,
   useQuery,
+  QueryResult,
 } from '@apollo/client';
 import * as React from 'react';
 import { useAppDispatch } from './redux';
@@ -13,7 +14,7 @@ import { useAppDispatch } from './redux';
 export function useCustomQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: QueryHookOptions<TData, TVariables>,
-) {
+): QueryResult<TData, TVariables> {
   const dispatch = useAppDispatch();
   const {
     loading,
@@ -23,7 +24,15 @@ export function useCustomQuery<TData = any, TVariables = OperationVariables>(
     networkStatus,
     observable,
     client,
-    refetch
+    called,
+    variables,
+    startPolling,
+    stopPolling,
+    subscribeToMore,
+    refetch,
+    updateQuery,
+    reobserve,
+    fetchMore,
   } = useQuery<TData, TVariables>(query, options);
 
   React.useEffect(() => {
@@ -42,5 +51,22 @@ export function useCustomQuery<TData = any, TVariables = OperationVariables>(
     }
   }, [error]);
 
-  return { data, previousData, networkStatus, observable, client,refetch };
+  return {
+    loading,
+    error,
+    data,
+    previousData,
+    networkStatus,
+    observable,
+    client,
+    called,
+    variables,
+    startPolling,
+    stopPolling,
+    subscribeToMore,
+    refetch,
+    updateQuery,
+    reobserve,
+    fetchMore,
+  };
 }

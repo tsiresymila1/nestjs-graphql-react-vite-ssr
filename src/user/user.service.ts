@@ -10,15 +10,11 @@ export class UserService {
   }
 
   findAll() {
-    let user1 = new User()
-    user1.name = "Tsiresy"
+    let user1 = new User();
+    user1.name = 'Tsiresy';
     let user2 = new User();
-    user2.name = "Mila"
-    return [
-      user1
-      ,
-      user2
-    ]
+    user2.name = 'Mila';
+    return [user1, user2];
   }
 
   findOne(id: number) {
